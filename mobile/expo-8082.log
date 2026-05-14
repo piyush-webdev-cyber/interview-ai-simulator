@@ -1,0 +1,50 @@
+Starting project at C:\projects\ai-app\mobile
+Starting Metro Bundler
+warning: Bundler cache is empty, rebuilding (this may take a minute)
+Waiting on http://localhost:8082
+Logs for your project will appear below.
+Android node_modules\expo\AppEntry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Android node_modules\expo\AppEntry.js ░░░░░░░░░░░░░░░░  1.0% (1/1)
+Android node_modules\expo\AppEntry.js ▓▓▓░░░░░░░░░░░░░ 22.7% ( 30/159)
+Android node_modules\expo\AppEntry.js ▓▓▓░░░░░░░░░░░░░ 22.7% ( 94/284)
+Android node_modules\expo\AppEntry.js ▓▓▓▓░░░░░░░░░░░░ 26.6% (198/407)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓░░░░░░░░░░░ 31.7% ( 275/2193)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓░░░░░░░░░░░ 31.7% ( 367/2305)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓░░░░░░░░░░░ 31.7% ( 474/2406)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓░░░░░░░░░░░ 31.7% ( 811/2418)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓░░░░░░░░░░░ 31.7% (1127/2418)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓░░░░░░░░░░░ 35.8% (1447/2418)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓▓▓▓░░░░░░░░ 55.7% (1805/2418)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓▓▓▓▓▓▓▓░░░░ 78.9% (2148/2418)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 90.2% (2354/2479)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 91.0% (2448/2590)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 91.8% (2562/2674)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 91.8% (2633/2784)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 92.4% (2733/2912)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 93.3% (2876/2978)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 95.7% (2954/3030)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 96.9% (3055/3118)
+Android node_modules\expo\AppEntry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 97.6% (3149/3188)
+Android Bundled 113961ms node_modules\expo\AppEntry.js (3219 modules)
+Android node_modules\expo\AppEntry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Android Bundled 126ms node_modules\expo\AppEntry.js (1 module)
+ WARN  SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/th3rdwave/react-native-safe-area-context
+Android node_modules\expo\AppEntry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Android Bundled 133ms node_modules\expo\AppEntry.js (1 module)
+ WARN  SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/th3rdwave/react-native-safe-area-context
+ ERROR  [ReferenceError: Property 'MAX_HINTS_PER_QUESTION' doesn't exist]
+Android node_modules\expo\AppEntry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Android Bundled 309ms node_modules\expo\AppEntry.js (1 module)
+ WARN  SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/th3rdwave/react-native-safe-area-context
+Android node_modules\expo\AppEntry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Android Bundled 123ms node_modules\expo\AppEntry.js (1 module)
+ WARN  SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/th3rdwave/react-native-safe-area-context
+ ERROR  [Error: Couldn't find the bottom tab bar height. Are you inside a screen in Bottom Tab Navigator?]
+Android node_modules\expo\AppEntry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Android Bundled 134ms node_modules\expo\AppEntry.js (1 module)
+ WARN  SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/th3rdwave/react-native-safe-area-context
+Android node_modules\@react-native-voice\voice\dist\index.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Android Bundled 176ms node_modules\@react-native-voice\voice\dist\index.js (1 module)
+Android node_modules\expo\AppEntry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Android Bundled 201ms node_modules\expo\AppEntry.js (1 module)
+ WARN  SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/th3rdwave/react-native-safe-area-context

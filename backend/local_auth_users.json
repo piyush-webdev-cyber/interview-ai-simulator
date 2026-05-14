@@ -1,0 +1,38 @@
+[
+  {
+    "id": "2d7c9990-ff28-43dd-92f0-2e224bc82c69",
+    "name": "Test User",
+    "email": "test@example.com",
+    "password_hash": "$2b$12$I/81fsMLHWIOA89Y25jEtu6zfQDsSJLmFqC3IRjgH8IMHNiqSA3U.",
+    "provider": "local",
+    "google_id": null,
+    "profile_picture": null,
+    "created_at": "2026-05-04T17:27:41.868491+00:00",
+    "updated_at": "2026-05-04T17:27:41.868491+00:00",
+    "last_login": "2026-05-04T17:27:41.868491+00:00"
+  },
+  {
+    "id": "ad299bb4-ae36-47d8-958b-21ccb9feb5e3",
+    "name": "Lol",
+    "email": "lol@gmail.com",
+    "password_hash": "$2b$12$Wes.Yxm3c8UFLhrOZwatdOFgvXroRXt9X/0okhd8udu0TVRkWtOvS",
+    "provider": "local",
+    "google_id": null,
+    "profile_picture": null,
+    "created_at": "2026-05-04T17:33:44.829861+00:00",
+    "updated_at": "2026-05-04T17:33:44.829861+00:00",
+    "last_login": "2026-05-04T17:33:44.829861+00:00"
+  },
+  {
+    "id": "50b810c6-53f6-49cc-9764-5656d3ab4eda",
+    "name": "New",
+    "email": "new@gmail.com",
+    "password_hash": "$2b$12$mndi9s3nwYyqDjZRiBbzVucie5DOxiphndr3PfrjyzVrHUORDif4u",
+    "provider": "local",
+    "google_id": null,
+    "profile_picture": null,
+    "created_at": "2026-05-04T17:52:04.971385+00:00",
+    "updated_at": "2026-05-04T17:52:04.971385+00:00",
+    "last_login": "2026-05-04T17:52:59.597593+00:00"
+  }
+]

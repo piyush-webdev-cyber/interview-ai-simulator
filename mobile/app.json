@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "scheme": [
+      "interviewai",
+      "myapp"
+    ],
+    "name": "Interview AI",
+    "slug": "interview-ai",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "newArchEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#0F172A"
+      },
+      "package": "com.chaton.interviewai"
+    },
+    "plugins": [
+      "expo-asset",
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Allow Interview AI to access the microphone for mock interview speech input.",
+          "speechRecognitionPermission": "Allow Interview AI to recognize speech for mock interview answers.",
+          "androidSpeechServicePackages": [
+            "com.google.android.googlequicksearchbox"
+          ]
+        }
+      ]
+    ]
+  }
+}

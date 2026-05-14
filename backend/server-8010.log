@@ -1,0 +1,75 @@
+INFO:     127.0.0.1:56337 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56338 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62301 - "POST /start-interview HTTP/1.1" 200 OK
+INFO:     192.168.31.207:53802 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     192.168.31.207:53802 - "POST /start-interview HTTP/1.1" 200 OK
+INFO:     192.168.31.207:53876 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     192.168.31.207:53876 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     192.168.31.207:53908 - "POST /start-interview HTTP/1.1" 200 OK
+INFO:     192.168.31.207:53920 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     192.168.31.207:54962 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53853 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.207:56918 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     192.168.31.207:56940 - "GET /progress HTTP/1.1" 200 OK
+INFO:     192.168.31.207:56988 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     192.168.31.207:57122 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     192.168.31.207:57390 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     192.168.31.207:58208 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     192.168.31.207:58262 - "POST /start-interview HTTP/1.1" 200 OK
+INFO:     192.168.31.207:58262 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     192.168.31.207:58610 - "GET /catalog HTTP/1.1" 200 OK
+INFO:     192.168.31.207:58808 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:58810 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:58824 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:58906 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:58908 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:58912 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:58954 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:58956 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:59034 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:61185 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:61614 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.75:57740 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.207:59042 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:59050 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:59052 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64301 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.75:64303 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64332 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64335 - "POST /start-interview HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:64343 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:62969 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:35884 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:57740 - "GET /start-interview HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:53185 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.31.207:40564 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:40592 - "POST /start-interview HTTP/1.1" 200 OK
+INFO:     192.168.31.207:40624 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:41126 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:41128 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:42492 - "GET /suggest-roles?query=Java HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42492 - "GET /suggest-roles?query=Java HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42492 - "GET /suggest-roles?query=Java%20D HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42492 - "GET /suggest-roles?query=Java%20De HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42492 - "GET /suggest-roles?query=Java%20Deve HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42492 - "GET /suggest-roles?query=Java%20Developer HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42492 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:50234 - "GET /start-interview HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:53856 - "GET /start-interview HTTP/1.1" 405 Method Not Allowed
+INFO:     192.168.31.207:42708 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:42754 - "GET /suggest-roles?query=Bac HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42754 - "GET /suggest-roles?query=Back HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42754 - "GET /suggest-roles?query=Backend HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42764 - "GET /suggest-roles?query=Backend%20Developer HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42764 - "POST /start-interview HTTP/1.1" 400 Bad Request
+INFO:     192.168.31.207:42776 - "GET /suggest-roles?query=Ja HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42776 - "GET /suggest-roles?query=Jav HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42776 - "GET /suggest-roles?query=Java HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42776 - "GET /suggest-roles?query=Java HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42776 - "GET /suggest-roles?query=Java%20D HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42776 - "GET /suggest-roles?query=Java%20De HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42776 - "GET /suggest-roles?query=Java%20Developer HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42776 - "GET /suggest-roles?query=Java%20Developer HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42802 - "GET /suggest-roles?query=Sale HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:42810 - "GET /suggest-roles?query=Data HTTP/1.1" 404 Not Found
+INFO:     192.168.31.207:43110 - "POST /start-interview HTTP/1.1" 400 Bad Request
