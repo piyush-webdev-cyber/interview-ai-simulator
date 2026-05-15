@@ -872,6 +872,7 @@ class AIService:
             auto_fail = True
 
         score = float(feedback.score)
+        model_hint_floor = self._mock_model_hint_answer_floor(question, role, answer) if phase == "mock" else None
         if auto_fail:
             score = min(score, 1.0)
         elif word_count < 10:
@@ -881,6 +882,8 @@ class AIService:
                 score = 0.0 if word_count <= 2 else 1.0
         elif weak_explanation:
             score = min(score, 2.5)
+        if model_hint_floor is not None:
+            score = max(score, model_hint_floor)
 
         if score <= 3:
             verdict: Literal["fail", "average", "good", "excellent"] = "fail"
@@ -916,7 +919,10 @@ class AIService:
         while len(improvements) < 2:
             improvements.append("Add specifics and structure instead of staying generic.")
 
-        final_feedback = feedback.final_feedback.strip() or "The answer is not good enough."
+        if model_hint_floor is not None and score >= 8:
+            final_feedback = "This is a strong mock interview answer because it uses the model-answer structure, stays on the prompt, gives a concrete example, explains actions and trade-offs, and ends with a clear result."
+        else:
+            final_feedback = feedback.final_feedback.strip() or "The answer is not good enough."
         if score < 7 and "not" not in final_feedback.casefold():
             final_feedback = f"{final_feedback} It is not strong enough to justify moving forward."
 
@@ -935,6 +941,13 @@ class AIService:
             next_phase=next_phase,
             follow_up_question=follow_up_question,
         )
+
+    def _mock_model_hint_answer_floor(self, question: str, role: str, answer: str) -> float | None:
+        normalized = " ".join(answer.split())
+        word_count = len(normalized.split())
+        if not self._is_app_model_hint_answer(question, role, normalized):
+            return None
+        return 9.0 if word_count >= 90 else 8.2
 
     def _is_trivially_inadequate_answer(self, answer: str) -> bool:
         normalized = " ".join(answer.split()).casefold()

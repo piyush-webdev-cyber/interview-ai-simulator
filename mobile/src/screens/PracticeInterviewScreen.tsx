@@ -1,4 +1,4 @@
-import { CircleAlert, Lightbulb, ListChecks, SendHorizonal, Sparkles, Target } from "lucide-react-native";
+import { CircleAlert, Lightbulb, ListChecks, Mic, SendHorizonal, Sparkles, Target } from "lucide-react-native";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { Button } from "@/components/Button";
@@ -8,6 +8,10 @@ import { colors } from "@/theme";
 
 type Props = {
   navigation: any;
+};
+type SpeechRecognitionModule = typeof import("expo-speech-recognition")["ExpoSpeechRecognitionModule"];
+type SpeechRecognitionSubscription = {
+  remove: () => void;
 };
 const MAX_HINTS_PER_SESSION = 2;
 
@@ -92,9 +96,13 @@ function buildPracticeHint(question: string, role: string) {
 
 export function PracticeInterviewScreen({ navigation }: Props) {
   const scrollRef = useRef<ScrollView>(null);
+  const speechModuleRef = useRef<SpeechRecognitionModule | null>(null);
+  const speechSubscriptionsRef = useRef<SpeechRecognitionSubscription[]>([]);
   const [answer, setAnswer] = useState("");
   const [hintsUsed, setHintsUsed] = useState(0);
   const [hintedQuestionKeys, setHintedQuestionKeys] = useState<string[]>([]);
+  const [isListening, setIsListening] = useState(false);
+  const [speechStatus, setSpeechStatus] = useState("Tap the mic to dictate your answer.");
   const { session, latestFeedback, submitAnswer, loading, error } = useInterviewStore();
 
   const dockHeight = 64;
@@ -126,6 +134,14 @@ export function PracticeInterviewScreen({ navigation }: Props) {
     scrollRef.current?.scrollTo({ y: 0, animated: true });
   }, [session?.current_question]);
 
+  useEffect(() => {
+    return () => {
+      speechSubscriptionsRef.current.forEach((subscription) => subscription.remove());
+      speechSubscriptionsRef.current = [];
+      speechModuleRef.current?.abort();
+    };
+  }, []);
+
   if (!session) {
     return (
       <Screen>
@@ -139,12 +155,118 @@ export function PracticeInterviewScreen({ navigation }: Props) {
   const submit = async () => {
     const trimmed = answer.trim();
     if (!trimmed) return;
+    if (isListening) {
+      await stopListening();
+    }
     const completed = await submitAnswer(trimmed);
     if (completed) {
       navigation.replace("Feedback");
       return;
     }
     setAnswer("");
+  };
+
+  const appendTranscript = (transcript: string) => {
+    const cleaned = transcript.trim();
+    if (!cleaned) return;
+    setAnswer((current) => {
+      const trimmed = current.trim();
+      if (!trimmed) return cleaned;
+      if (trimmed.endsWith(cleaned)) return trimmed;
+      return `${trimmed} ${cleaned}`;
+    });
+    setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 80);
+  };
+
+  const loadSpeechModule = async () => {
+    if (speechModuleRef.current) return speechModuleRef.current;
+
+    try {
+      const module = await import("expo-speech-recognition");
+      const speechModule = module.ExpoSpeechRecognitionModule;
+
+      speechSubscriptionsRef.current = [
+        speechModule.addListener("start", () => {
+          setIsListening(true);
+          setSpeechStatus("Listening...");
+        }),
+        speechModule.addListener("end", () => {
+          setIsListening(false);
+          setSpeechStatus("Speech captured. Tap mic again to add more.");
+        }),
+        speechModule.addListener("result", (event) => {
+          appendTranscript(event.results[0]?.transcript ?? "");
+        }),
+        speechModule.addListener("error", (event) => {
+          setIsListening(false);
+          setSpeechStatus("Tap the mic to try again.");
+          if (event.error !== "aborted") {
+            Alert.alert("Speech input stopped", event.message || "Could not recognize speech. Try again.");
+          }
+        }),
+      ];
+
+      speechModuleRef.current = speechModule;
+      return speechModule;
+    } catch {
+      Alert.alert(
+        "Development build required",
+        "Speech-to-text needs the custom Android build because Expo Go does not include the native speech module. The rest of the app will work in Expo Go.",
+      );
+      return null;
+    }
+  };
+
+  const requestMicrophonePermission = async (speechModule: SpeechRecognitionModule) => {
+    const result = await speechModule.requestPermissionsAsync();
+    return result.granted;
+  };
+
+  const startListening = async () => {
+    const speechModule = await loadSpeechModule();
+    if (!speechModule) return;
+
+    const hasPermission = await requestMicrophonePermission(speechModule);
+    if (!hasPermission) {
+      Alert.alert("Microphone blocked", "Allow microphone access to use speech-to-text.");
+      return;
+    }
+
+    try {
+      if (!speechModule.isRecognitionAvailable()) {
+        Alert.alert("Speech recognition unavailable", "No speech recognition service is available on this device.");
+        return;
+      }
+
+      speechModule.start({
+        lang: "en-US",
+        interimResults: true,
+        continuous: false,
+      });
+    } catch (error) {
+      setIsListening(false);
+      setSpeechStatus("Tap the mic to try again.");
+      Alert.alert("Speech input failed", error instanceof Error ? error.message : "Could not start speech recognition.");
+    }
+  };
+
+  const stopListening = async () => {
+    const speechModule = speechModuleRef.current;
+    if (!speechModule) return;
+    try {
+      speechModule.stop();
+    } finally {
+      setIsListening(false);
+      setSpeechStatus("Speech captured. Tap mic again to add more.");
+    }
+  };
+
+  const toggleListening = async () => {
+    if (isListening) {
+      await stopListening();
+      return;
+    }
+    await startListening();
   };
 
   const handleHintPress = () => {
@@ -268,6 +390,16 @@ export function PracticeInterviewScreen({ navigation }: Props) {
               textAlignVertical="top"
               style={styles.answerInput}
             />
+            <View style={styles.speechRow}>
+              <Pressable
+                accessibilityRole="button"
+                onPress={toggleListening}
+                style={[styles.micButton, isListening && styles.micButtonActive]}
+              >
+                <Mic color={isListening ? "#FFFFFF" : "#94A3B8"} size={20} />
+              </Pressable>
+              <Text style={styles.speechStatus}>{speechStatus}</Text>
+            </View>
             <Text style={styles.answerHint}>We'll score it honestly, then show how to make it stronger.</Text>
           </View>
 
@@ -596,6 +728,30 @@ const styles = StyleSheet.create({
     color: "#64748B",
     fontSize: 12,
     lineHeight: 18,
+  },
+  speechRow: {
+    marginTop: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  micButton: {
+    height: 44,
+    width: 44,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#F1F5F9",
+  },
+  micButtonActive: {
+    backgroundColor: colors.brand,
+  },
+  speechStatus: {
+    flex: 1,
+    color: "#64748B",
+    fontSize: 12,
+    lineHeight: 18,
+    fontWeight: "600",
   },
   feedbackCard: {
     borderRadius: 24,
