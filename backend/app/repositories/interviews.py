@@ -102,8 +102,12 @@ class InterviewRepository:
                 answer=answer.answer,
                 feedback=RoundFeedback(
                     score=answer.score,
+                    verdict="fail" if answer.score <= 3 else "average" if answer.score <= 6 else "good" if answer.score <= 8 else "excellent",
                     strengths=answer.strengths,
                     weaknesses=answer.weaknesses,
+                    improvements=["Review the feedback report for the next step.", "Add more role-specific detail in the next answer."],
+                    final_feedback="Saved answer review.",
+                    next_action="next_phase",
                     follow_up_question=answer.follow_up_question,
                 ),
             )

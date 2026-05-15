@@ -101,6 +101,7 @@ class InterviewAppService:
             difficulty: {mode: False for mode in mode_order}
             for difficulty in difficulty_order
         }
+        role_phase_status: dict[str, dict[str, dict[str, bool]]] = {}
 
         for record in records:
             if not record.report or record.report.overall_score < 7:
@@ -108,6 +109,13 @@ class InterviewAppService:
             difficulty = self._normalize_difficulty(record.difficulty)
             if difficulty in phase_status and record.mode in phase_status[difficulty]:
                 phase_status[difficulty][record.mode] = True
+            role_key = self._role_progress_key(record.role)
+            if difficulty in difficulty_order and record.mode in mode_order:
+                role_phase_status.setdefault(
+                    role_key,
+                    {item: {mode: False for mode in mode_order} for item in difficulty_order},
+                )
+                role_phase_status[role_key][difficulty][record.mode] = True
 
         difficulty_unlocks = {
             "Beginner": True,
@@ -151,6 +159,7 @@ class InterviewAppService:
             difficulty_unlocks=difficulty_unlocks,
             recommended_difficulty=recommended_difficulty,
             difficulty_phase_status=phase_status,
+            role_phase_status=role_phase_status,
             weak_topics=weak_topics,
             recent_answer_reviews=[],
             recent_sessions=[self.interviews.to_schema(record) for record in records[:5]],
@@ -166,3 +175,6 @@ class InterviewAppService:
             "senior": "Senior",
         }
         return mapping.get(normalized, difficulty.strip().title() or "Beginner")
+
+    def _role_progress_key(self, role: str) -> str:
+        return "".join(character for character in role.casefold() if character.isalnum())

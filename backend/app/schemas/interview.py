@@ -115,6 +115,7 @@ class ProgressSummary(BaseModel):
     difficulty_unlocks: dict[str, bool]
     recommended_difficulty: str | None = None
     difficulty_phase_status: dict[str, dict[str, bool]]
+    role_phase_status: dict[str, dict[str, dict[str, bool]]] = Field(default_factory=dict)
     score_trends: list[dict[str, float | str]]
     weak_topics: list[str]
     recent_answer_reviews: list[AnswerReview]

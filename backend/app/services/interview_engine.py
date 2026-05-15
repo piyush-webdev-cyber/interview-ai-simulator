@@ -159,6 +159,7 @@ class InterviewEngine:
             difficulty: {mode: False for mode in mode_order}
             for difficulty in difficulty_order
         }
+        role_phase_status: dict[str, dict[str, dict[str, bool]]] = {}
         for session in completed:
             report = self.completed_reports.get(session.id)
             if not report:
@@ -166,6 +167,13 @@ class InterviewEngine:
             difficulty = self._normalize_difficulty(session.difficulty)
             if difficulty in phase_status and session.mode in phase_status[difficulty] and report.overall_score >= 7:
                 phase_status[difficulty][session.mode] = True
+            if report.overall_score >= 7 and difficulty in phase_status and session.mode in phase_status[difficulty]:
+                role_key = self._role_progress_key(session.role)
+                role_phase_status.setdefault(
+                    role_key,
+                    {item: {mode: False for mode in mode_order} for item in difficulty_order},
+                )
+                role_phase_status[role_key][difficulty][session.mode] = True
 
         difficulty_unlocks = {
             "Beginner": True,
@@ -201,6 +209,7 @@ class InterviewEngine:
             difficulty_unlocks=difficulty_unlocks,
             recommended_difficulty=recommended_difficulty,
             difficulty_phase_status=phase_status,
+            role_phase_status=role_phase_status,
             score_trends=[
                 {"session_id": report.session_id, "role": report.role, "score": report.overall_score}
                 for report in reports[-8:]
@@ -256,6 +265,9 @@ class InterviewEngine:
             "senior": "Senior",
         }
         return mapping.get(normalized, difficulty.strip().title() or "Beginner")
+
+    def _role_progress_key(self, role: str) -> str:
+        return "".join(character for character in role.casefold() if character.isalnum())
 
     def _weak_areas_for_role(self, role: str) -> list[str]:
         role_key = role.casefold()

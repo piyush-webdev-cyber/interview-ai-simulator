@@ -80,6 +80,7 @@ export type ProgressSummary = {
   difficulty_unlocks?: Record<string, boolean>;
   recommended_difficulty?: string | null;
   difficulty_phase_status?: Record<string, Record<InterviewMode, boolean>>;
+  role_phase_status?: Record<string, Record<string, Record<InterviewMode, boolean>>>;
   score_trends: Array<{ session_id: string; role: string; score: number | string }>;
   weak_topics: string[];
   recent_sessions: InterviewSession[];

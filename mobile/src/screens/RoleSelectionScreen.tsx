@@ -101,6 +101,10 @@ function difficultyProgressKey(difficulty: Difficulty) {
   return difficulty === "Mid-level" ? "Intermediate" : difficulty;
 }
 
+function roleProgressKey(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
 function isDifficultyUnlocked(unlocks: Record<string, boolean> | undefined, difficulty: Difficulty) {
   if (difficulty === "Beginner") return true;
   if (!unlocks) return false;
@@ -184,19 +188,23 @@ export function RoleSelectionScreen() {
   const dockHeight = 138 + Math.max(insets.bottom, 8);
   const isInsideMainTabs = route.name === "Roles";
 
-  const fallbackModeUnlocks: Record<InterviewMode, boolean> = {
-    "Practice Mode": true,
+  const fallbackCompletedPhases: Record<InterviewMode, boolean> = {
+    "Practice Mode": false,
     "Mock Interview": false,
     "Rapid Fire Mode": false,
   };
-  const difficultyPhaseStatus =
-    progress?.difficulty_phase_status?.[difficultyProgressKey(difficulty)] ??
-    progress?.mode_unlocks ??
-    fallbackModeUnlocks;
+  const selectedRoleKey = roleProgressKey(role.trim());
+  const difficultyKey = difficultyProgressKey(difficulty);
+  const rolePhaseStatus = selectedRoleKey ? progress?.role_phase_status?.[selectedRoleKey]?.[difficultyKey] : undefined;
+  const legacyPracticeClearedForRole = Boolean(
+    selectedRoleKey &&
+      progress?.score_trends?.some((item) => roleProgressKey(item.role) === selectedRoleKey && Number(item.score) >= 7),
+  );
+  const difficultyPhaseStatus = rolePhaseStatus ?? (legacyPracticeClearedForRole ? { ...fallbackCompletedPhases, "Practice Mode": true } : fallbackCompletedPhases);
   const modeUnlocks = {
     "Practice Mode": true,
-    "Mock Interview": Boolean(difficultyPhaseStatus["Mock Interview"]) || Boolean(devUnlocks["Mock Interview"]),
-    "Rapid Fire Mode": Boolean(difficultyPhaseStatus["Rapid Fire Mode"]) || Boolean(devUnlocks["Rapid Fire Mode"]),
+    "Mock Interview": Boolean(difficultyPhaseStatus["Practice Mode"]) || Boolean(devUnlocks["Mock Interview"]),
+    "Rapid Fire Mode": Boolean(difficultyPhaseStatus["Mock Interview"]) || Boolean(devUnlocks["Rapid Fire Mode"]),
   };
   const difficultyUnlocks: Record<Difficulty, boolean> = {
     Beginner: true,
@@ -281,11 +289,15 @@ export function RoleSelectionScreen() {
   };
 
   const handleModeSelect = (value: InterviewMode) => {
+    if (value !== "Practice Mode" && role.trim().length < 2) {
+      Alert.alert("Role required", "Enter the role first. Mock and Rapid Fire unlock separately for each role.");
+      return;
+    }
     if (!modeUnlocks[value]) {
       const lockMessage =
         value === "Mock Interview"
-          ? "Score 7 or greater in Practice Mode to unlock Mock Interview."
-          : "Score 7 or greater in Mock Interview to unlock Rapid Fire Mode.";
+          ? `Score 7 or greater in Practice Mode for ${role.trim()} to unlock Mock Interview for this role.`
+          : `Score 7 or greater in Mock Interview for ${role.trim()} to unlock Rapid Fire Mode for this role.`;
       Alert.alert("Phase Locked", lockMessage);
       return;
     }
@@ -319,7 +331,11 @@ export function RoleSelectionScreen() {
     }
 
     if (!modeUnlocks[mode]) {
-      Alert.alert("Phase Locked", "Complete the previous phase with a strong score to unlock this interview mode.");
+      const dependency =
+        mode === "Mock Interview"
+          ? `Complete Practice Mode for ${trimmedRole} with a score of 7 or greater first.`
+          : `Complete Mock Interview for ${trimmedRole} with a score of 7 or greater first.`;
+      Alert.alert("Phase Locked", dependency);
       return;
     }
 

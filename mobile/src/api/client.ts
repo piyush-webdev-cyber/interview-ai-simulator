@@ -1,43 +1,10 @@
 import type { FinalReport, InterviewSession, ProgressSummary, ResumeAnalysis, RoundFeedback } from "@/types/interview";
-import Constants from "expo-constants";
-import { NativeModules, Platform } from "react-native";
 import { supabase } from "@/lib/supabase";
 
-const DEFAULT_BACKEND_PORT = process.env.EXPO_PUBLIC_API_PORT ?? "8012";
-const KNOWN_LAN_HOSTS = ["10.48.61.203"];
-
-type ExpoConstantsWithHost = typeof Constants & {
-  manifest?: { debuggerHost?: string; packagerOpts?: { host?: string } };
-  manifest2?: { extra?: { expoClient?: { hostUri?: string } } };
-};
+const DEPLOYED_API_URL = "https://interview-ai-simulator-r685.onrender.com";
 
 function stripTrailingSlash(value: string): string {
   return value.replace(/\/+$/, "");
-}
-
-function normalizeHost(value?: string | null): string | null {
-  if (!value) return null;
-  return value.replace(/^https?:\/\//, "").split("/")[0].split(":")[0] || null;
-}
-
-function getExpoHost(): string | null {
-  const constants = Constants as ExpoConstantsWithHost;
-  const hostUri =
-    Constants.expoConfig?.hostUri ??
-    constants.manifest2?.extra?.expoClient?.hostUri ??
-    constants.manifest?.debuggerHost ??
-    constants.manifest?.packagerOpts?.host;
-
-  return normalizeHost(hostUri);
-}
-
-function getMetroScriptHost(): string | null {
-  const sourceCode = NativeModules.SourceCode as { scriptURL?: string } | undefined;
-  return normalizeHost(sourceCode?.scriptURL);
-}
-
-function unique(values: string[]) {
-  return [...new Set(values.map(stripTrailingSlash).filter(Boolean))];
 }
 
 function resolveApiUrls(): string[] {
@@ -45,29 +12,7 @@ function resolveApiUrls(): string[] {
     return [stripTrailingSlash(process.env.EXPO_PUBLIC_API_URL)];
   }
 
-  const urls: string[] = [];
-  const expoHost = getExpoHost();
-  if (expoHost) {
-    urls.push(`http://${expoHost}:${DEFAULT_BACKEND_PORT}`);
-  }
-
-  const metroScriptHost = getMetroScriptHost();
-  if (metroScriptHost) {
-    urls.push(`http://${metroScriptHost}:${DEFAULT_BACKEND_PORT}`);
-  }
-
-  for (const host of KNOWN_LAN_HOSTS) {
-    urls.push(`http://${host}:${DEFAULT_BACKEND_PORT}`);
-  }
-
-  if (Platform.OS === "android") {
-    urls.push(`http://127.0.0.1:${DEFAULT_BACKEND_PORT}`);
-    urls.push(`http://10.0.2.2:${DEFAULT_BACKEND_PORT}`);
-  } else {
-    urls.push(`http://localhost:${DEFAULT_BACKEND_PORT}`);
-  }
-
-  return unique(urls);
+  return [DEPLOYED_API_URL];
 }
 
 const API_URLS = resolveApiUrls();
